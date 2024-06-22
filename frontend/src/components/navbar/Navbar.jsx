@@ -9,7 +9,7 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 const Navbar = () => {
   return (
-    <div className='navbar'>
+    <div className='navbar' data-testid='navbar'>
       <div className='wrapper'>
         <div className='search'>
           <input type='text' placeholder='Search...'/>

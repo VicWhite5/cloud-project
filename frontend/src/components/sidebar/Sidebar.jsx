@@ -16,7 +16,7 @@ import RamenDiningIcon from '@mui/icons-material/RamenDining';
 import {Link} from 'react-router-dom';
 const Sidebar = () => {
   return (
-    <div className='sidebar'>
+    <div className='sidebar' data-testid='sidebar'>
         <div className='top'>
             <Link to="/" style={{textDecoration:"none"}}>
             <RamenDiningIcon className='icon'/>

@@ -6,7 +6,7 @@ import DatatableServices from '../../components/datatableServices/DatatableServi
 
 const Services = () => {
   return (
-    <div className='services'>
+    <div className='services' data-testid='services'>
       <Sidebar/>
       <div className='servicesContainer'>
         <Navbar/>
