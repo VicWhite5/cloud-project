@@ -1,0 +1,51 @@
+name: Docker Image CI
+run-name: Víctor, Ignacio y Ori están haciendo un Action 🐐🐺🎀
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps: 
+    - name: Checkout code 
+      uses: actions/checkout@v4 
+      with:
+        fetch-depth: 0
+
+    - name: Git Semantic Version
+      uses: PaulHatch/semantic-version@v4.0.3 
+      with:
+        major_pattern: "major:"
+        minor_pattern: "feat:"
+        format: "${major}.${minor}.${patch}-prerelease.${increment}"
+      id: version
+
+    - name: Docker login 
+      env: 
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+    - name: Build the Docker images 
+      env: 
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        cd frontend
+        docker build --tag victor281201/frontend-cp:$NEW_VERSION . 
+        docker build --tag victor281201/frontend-cp:latest . 
+        cd ../backend
+        docker build --tag victor281201/backend-cp:$NEW_VERSION . 
+        docker build --tag victor281201/backend-cp:latest . 
+
+    - name: Push the Docker images
+      env: 
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker push victor281201/docker-frontend:$NEW_VERSION 
+        docker push victor281201/docker-frontend:latest
+        docker push victor281201/docker-backend:$NEW_VERSION 
+        docker push victor281201/docker-backend:latest
