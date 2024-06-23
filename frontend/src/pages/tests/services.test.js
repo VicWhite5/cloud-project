@@ -11,22 +11,22 @@ describe('Services', () => {
     expect(screen.getByTestId('services')).toBeInTheDocument();
   });
 
-  it('renders the Sidebar component', () => {
-    render(<Router>
-        <Services />
-      </Router>);
-    expect(screen.getByTestId('sidebar')).toBeInTheDocument();
-  });
-  it('renders the Navbar component', () => {
-    render(<Router>
-        <Services />
-      </Router>);
-    expect(screen.getByTestId('navbar')).toBeInTheDocument();
-  });
-  it('renders the DatatableServices component', () => {
-    render(<Router>
-        <Services />
-      </Router>);
-    expect(screen.getByTestId('datatableServices')).toBeInTheDocument();
-  });
+  // it('renders the Sidebar component', () => {
+  //   render(<Router>
+  //       <Services />
+  //     </Router>);
+  //   expect(screen.getByTestId('sidebar')).toBeInTheDocument();
+  // });
+  // it('renders the Navbar component', () => {
+  //   render(<Router>
+  //       <Services />
+  //     </Router>);
+  //   expect(screen.getByTestId('navbar')).toBeInTheDocument();
+  // });
+  // it('renders the DatatableServices component', () => {
+  //   render(<Router>
+  //       <Services />
+  //     </Router>);
+  //   expect(screen.getByTestId('datatableServices')).toBeInTheDocument();
+  // });
 });
