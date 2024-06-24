@@ -4,4 +4,4 @@ metadata:
   name: mongo-config
 data:
   DB_NAME: ramen-db
-  DB_HOSTS: mongo-service
+  DB_HOSTS: mongo-service:27017
