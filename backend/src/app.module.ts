@@ -13,8 +13,12 @@ import { AuditModule } from './audit/audit.module';
     //   `mongodb://${process.env.DB_HOSTS}/${process.env.DB_NAME}?replicaSet=${process.env.REPLICA_SET}`
     // ),
 
+    // MongooseModule.forRoot(
+    //   `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOSTS}/${process.env.DB_NAME}?`
+    // ),
+
     MongooseModule.forRoot(
-      `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOSTS}/${process.env.DB_NAME}?`
+      `mongodb://root:$password@mongo-service/${process.env.DB_NAME}?`
     ),
 
     RamenModule,
