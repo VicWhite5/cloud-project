@@ -18,6 +18,10 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Accept, Range',
   });
 
+  console.log(process.env.DB_USER);
+  console.log(process.env.DB_PASSWORD);
+  
+
   await app.listen(3000);
 }
 bootstrap();

@@ -27,7 +27,7 @@ spec:
             configMapKeyRef:
               name: mongo-config
               key: DB_NAME
-        - name: DB_HOST
+        - name: DB_HOSTS
           valueFrom:
             configMapKeyRef:
               name: mongo-config
