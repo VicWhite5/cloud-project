@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-config
+data:
+  DB_NAME: ramen-db
+  DB_HOST: mongo-service

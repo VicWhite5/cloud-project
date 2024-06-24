@@ -20,7 +20,7 @@ EXPOSE 3000
 WORKDIR /app
 ENV DB_HOSTS=${DB_HOSTS}
 ENV DB_NAME=${DB_NAME}
-ENV REPLICA_SET=${REPLICA_SET}
+# ENV REPLICA_SET=${REPLICA_SET}
 ENV CONTAINER=${CONTAINER}
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist

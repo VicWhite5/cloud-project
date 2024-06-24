@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    app: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: victor281201/backend-cp:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: CONTAINER
+          value: Kubernetes
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-config
+              key: DB_NAME
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-config
+              key: DB_HOST
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secrets
+              key: MONGO_INITDB_ROOT_USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secrets
+              key: MONGO_INITDB_ROOT_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend
+  ports:
+    - protocol: TCP
+      port: 3000 #cualquier puerto (el que usan desde afuera)
+      targetPort: 3000 #el de adentro
+      nodePort: 30300
