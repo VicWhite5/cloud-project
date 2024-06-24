@@ -1,5 +1,5 @@
 name: Docker Image CI
-run-name: Víctor, Ignacio y Ori están haciendo un Action 🐐🐺🎀
+run-name: Víctor, Ignacio y Ori are making an Action 🐐🐺🎀
 on:
   push:
     branches: [ "main" ]
@@ -34,18 +34,28 @@ jobs:
       env: 
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
+        echo "Building frontend 📱 📱 📱"
         cd frontend
+        echo "Building frontend-cp:$NEW_VERSION 📱 📱 📱 🛠 🛠 🛠"
         docker build --tag victor281201/frontend-cp:$NEW_VERSION . 
+        echo "Building frontend-cp:latest 📱 📱 📱 🛠 🛠 🛠"
         docker build --tag victor281201/frontend-cp:latest . 
         cd ../backend
+        echo "Building backend 🔙 🔙 🔙"
+        echo "Building backend-cp:$NEW_VERSION 🔙 🔙 🔙 🛠 🛠 🛠"
         docker build --tag victor281201/backend-cp:$NEW_VERSION . 
+        echo "Building backend-cp:latest 🔙 🔙 🔙 🛠 🛠 🛠"
         docker build --tag victor281201/backend-cp:latest . 
 
     - name: Push the Docker images
       env: 
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        docker push victor281201/docker-frontend:$NEW_VERSION 
-        docker push victor281201/docker-frontend:latest
-        docker push victor281201/docker-backend:$NEW_VERSION 
-        docker push victor281201/docker-backend:latest
+        echo "Pushing frontend-cp:$NEW_VERSION 📱 📱 📱 🎁 🎁 🎁"
+        docker push victor281201/frontend-cp:$NEW_VERSION
+        echo "Pushing frontend-cp:latest 📱 📱 📱 🎁 🎁 🎁"
+        docker push victor281201/frontend-cp:latest
+        echo "Pushing backend-cp:$NEW_VERSION 🔙 🔙 🔙🎁 🎁 🎁"
+        docker push victor281201/backend-cp:$NEW_VERSION 
+        echo "Pushing backend-cp:latest 🔙 🔙 🔙🎁 🎁 🎁"
+        docker push victor281201/backend-cp:latest
