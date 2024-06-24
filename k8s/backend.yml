@@ -31,7 +31,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: mongo-config
-              key: DB_HOST
+              key: DB_HOSTS
         - name: DB_USER
           valueFrom:
             secretKeyRef:
@@ -50,6 +50,7 @@ metadata:
 spec:
   selector:
     app: backend
+  type: NodePort
   ports:
     - protocol: TCP
       port: 3000 #cualquier puerto (el que usan desde afuera)

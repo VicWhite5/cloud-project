@@ -14,7 +14,7 @@ import { AuditModule } from './audit/audit.module';
     // ),
 
     MongooseModule.forRoot(
-      `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOSTS}/${process.env.DB_NAME}?`
+      `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@alo/${process.env.DB_NAME}?`
     ),
 
     RamenModule,
