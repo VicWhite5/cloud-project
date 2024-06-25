@@ -87,7 +87,6 @@ jobs:
           GROUP=snap_microk8s # microk8s for non-strict
           sudo usermod -a -G $GROUP $USER
           newgrp $GROUP
-          mkdir ~/.kube
           sudo chown -f -R $USER ~/.kube
           echo "Setting Up MongoDB 🍃 🍃 🍃"
           cd k8s
@@ -102,7 +101,6 @@ jobs:
           GROUP=snap_microk8s # microk8s for non-strict
           sudo usermod -a -G $GROUP $USER
           newgrp $GROUP
-          mkdir ~/.kube
           sudo chown -f -R $USER ~/.kube
           echo "Setting Up the Data Base 🍃 🍃 🍃"
           alias kubectl="microk8s.kubectl"
@@ -116,7 +114,6 @@ jobs:
           GROUP=snap_microk8s # microk8s for non-strict
           sudo usermod -a -G $GROUP $USER
           newgrp $GROUP
-          mkdir ~/.kube
           sudo chown -f -R $USER ~/.kube
           echo "Setting Up the Backend 🦁 🦁 🦁"
           alias kubectl="microk8s.kubectl"
@@ -131,7 +128,6 @@ jobs:
           GROUP=snap_microk8s # microk8s for non-strict
           sudo usermod -a -G $GROUP $USER
           newgrp $GROUP
-          mkdir ~/.kube
           sudo chown -f -R $USER ~/.kube
           echo "Setting Up the Frontend 📱 📱 📱"
           alias kubectl="microk8s.kubectl"
