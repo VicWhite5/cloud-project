@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: mongo-config
 data:
-  DB_NAME: ramen-db
+  DB_NAME: admin
   DB_HOSTS: mongo-service:27017
