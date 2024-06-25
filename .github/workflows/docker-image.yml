@@ -35,7 +35,7 @@ jobs:
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         echo "Building frontend 📱 📱 📱"
-        cd ../backend
+        cd backend
         echo "Building backend 🔙 🔙 🔙"
         echo "Building backend-cp:$NEW_VERSION 🔙 🔙 🔙 🛠 🛠 🛠"
         docker build --tag victor281201/backend-cp:$NEW_VERSION . 
