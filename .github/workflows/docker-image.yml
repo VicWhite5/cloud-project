@@ -93,7 +93,7 @@ jobs:
           echo "Setting Up the Backend 🦁 🦁 🦁"
           cd k8s
           sudo microk8s.kubectl apply -f backend.yml
-          sleep 60
+          sleep 90
           NODE_IP=$(sudo microk8s.kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
           curl http://$NODE_IP:30300/api/ramens | jq
 
@@ -102,6 +102,6 @@ jobs:
           echo "Setting Up the Frontend 📱 📱 📱"
           cd k8s
           sudo microk8s.kubectl apply -f frontend.yml
-          sleep 60
+          sleep 90
           NODE_IP=$(sudo microk8s.kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
           curl http://$NODE_IP:30080/
