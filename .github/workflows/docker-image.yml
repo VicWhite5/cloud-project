@@ -70,7 +70,6 @@ jobs:
       - name: Set up environment
         run: |
           echo "Setting Up the environment for microk8s 🚢 🚢 🚢"
-          sudo snap install jq
           sudo snap install microk8s --channel 1.29-strict/stable
           GROUP=snap_microk8s
           sudo usermod -a -G $GROUP $USER
@@ -103,7 +102,7 @@ jobs:
           sudo microk8s.kubectl apply -f backend.yml
           sleep 60
           NODE_IP=$(sudo microk8s.kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
-          curl http://$NODE_IP:30300/api/ramens | jq
+          curl http://$NODE_IP:30300/api/ramens
 
       - name: Set Up the Frontend
         run: |
