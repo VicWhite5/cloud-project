@@ -84,6 +84,11 @@ jobs:
 
       - name: Set up MongoDB
         run: |
+          GROUP=snap_microk8s # microk8s for non-strict
+          sudo usermod -a -G $GROUP $USER
+          newgrp $GROUP
+          mkdir ~/.kube
+          sudo chown -f -R $USER ~/.kube
           echo "Setting Up MongoDB 🍃 🍃 🍃"
           cd k8s
           alias kubectl="microk8s.kubectl"
@@ -94,6 +99,11 @@ jobs:
 
       - name: Set up the Data Base
         run: |
+          GROUP=snap_microk8s # microk8s for non-strict
+          sudo usermod -a -G $GROUP $USER
+          newgrp $GROUP
+          mkdir ~/.kube
+          sudo chown -f -R $USER ~/.kube
           echo "Setting Up the Data Base 🍃 🍃 🍃"
           alias kubectl="microk8s.kubectl"
           microk8s.kubectl exec -it deployment.apps/mongo-deployment -- /bin/bash
@@ -103,6 +113,11 @@ jobs:
       
       - name: Set Up the Backend
         run: |
+          GROUP=snap_microk8s # microk8s for non-strict
+          sudo usermod -a -G $GROUP $USER
+          newgrp $GROUP
+          mkdir ~/.kube
+          sudo chown -f -R $USER ~/.kube
           echo "Setting Up the Backend 🦁 🦁 🦁"
           alias kubectl="microk8s.kubectl"
           cd k8s
@@ -113,6 +128,11 @@ jobs:
 
       - name: Set Up the Frontend
         run: |
+          GROUP=snap_microk8s # microk8s for non-strict
+          sudo usermod -a -G $GROUP $USER
+          newgrp $GROUP
+          mkdir ~/.kube
+          sudo chown -f -R $USER ~/.kube
           echo "Setting Up the Frontend 📱 📱 📱"
           alias kubectl="microk8s.kubectl"
           cd k8s
