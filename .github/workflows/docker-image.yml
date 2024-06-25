@@ -96,7 +96,7 @@ jobs:
           sleep 60
           sudo microk8s.kubectl logs deployment.apps/backend-deployment
           NODE_IP=$(sudo microk8s.kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
-          curl http://$NODE_IP:30300/api/ramens | jq
+          curl http://$NODE_IP:30300/api/ramens
 
       - name: Set Up the Frontend
         run: |
