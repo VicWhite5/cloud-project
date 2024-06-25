@@ -86,7 +86,8 @@ jobs:
         run: |
           echo "Setting Up the Data Base 🍃 🍃 🍃"
           sudo microk8s.kubectl exec deployment.apps/mongo-deployment -- bash -c "echo '(async function() { await use(\"ramen-db\"); await db.ramen.insertOne({ id: \"03934eec-9852-4251-853e-4475406e616f\", name: \"Kioto\", description: \"A delicious ramen for those with some experience tasting ramen.\", price: 10, spice_level: 2, isDeleted: false}); })()' | mongosh -u root -p password"
-          sudo microk8s.kubectl exec deployment.apps/mongo-deployment -- bash -c "echo 'use ramen-db db.createUser({user: \"root\", pwd: \"password\", roles: [ { role: \"readWrite\", db: \"ramen-db\" } ]})' | mongosh -u root -p password"
+          sudo microk8s.kubectl cp setup-db.js mongo-deployment:/setup-db.js
+          sudo microk8s.kubectl exec deployment.apps/mongo-deployment -- mongosh -u root -p password /setup-db.js
       - name: Set Up the Backend
         run: |
           echo "Setting Up the Backend 🦁 🦁 🦁"
