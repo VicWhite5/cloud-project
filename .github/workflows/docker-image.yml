@@ -35,11 +35,6 @@ jobs:
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         echo "Building frontend 📱 📱 📱"
-        cd frontend
-        echo "Building frontend-cp:$NEW_VERSION 📱 📱 📱 🛠 🛠 🛠"
-        docker build --tag victor281201/frontend-cp:$NEW_VERSION . 
-        echo "Building frontend-cp:latest 📱 📱 📱 🛠 🛠 🛠"
-        docker build --tag victor281201/frontend-cp:latest . 
         cd ../backend
         echo "Building backend 🔙 🔙 🔙"
         echo "Building backend-cp:$NEW_VERSION 🔙 🔙 🔙 🛠 🛠 🛠"
@@ -51,10 +46,6 @@ jobs:
       env: 
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        echo "Pushing frontend-cp:$NEW_VERSION 📱 📱 📱 🎁 🎁 🎁"
-        docker push victor281201/frontend-cp:$NEW_VERSION
-        echo "Pushing frontend-cp:latest 📱 📱 📱 🎁 🎁 🎁"
-        docker push victor281201/frontend-cp:latest
         echo "Pushing backend-cp:$NEW_VERSION 🔙 🔙 🔙🎁 🎁 🎁"
         docker push victor281201/backend-cp:$NEW_VERSION 
         echo "Pushing backend-cp:latest 🔙 🔙 🔙🎁 🎁 🎁"
@@ -72,25 +63,20 @@ jobs:
           echo "Setting Up the environment for microk8s 🚢 🚢 🚢"
           sudo snap install jq
           sudo snap install microk8s --channel 1.29-strict/stable
-          GROUP=snap_microk8s # microk8s for non-strict
+          GROUP=snap_microk8s
           sudo usermod -a -G $GROUP $USER
           newgrp $GROUP
           mkdir ~/.kube
           sudo chown -f -R $USER ~/.kube
-          sleep 60
+          sleep 90
           sudo microk8s enable hostpath-storage
           sudo sysctl -w fs.inotify.max_user_instances=1280 | sudo tee /etc/sysctl.d/microk8s.conf
           sudo sysctl -w fs.inotify.max_user_watches=655360 | sudo tee -a /etc/sysctl.d/microk8s.conf
 
       - name: Set up MongoDB
         run: |
-          GROUP=snap_microk8s # microk8s for non-strict
-          sudo usermod -a -G $GROUP $USER
-          newgrp $GROUP
-          sudo chown -f -R $USER ~/.kube
           echo "Setting Up MongoDB 🍃 🍃 🍃"
           cd k8s
-          alias kubectl="microk8s.kubectl"
           microk8s.kubectl apply -f mongo-secrets.yml
           microk8s.kubectl apply -f mongo-config.yml
           microk8s.kubectl apply -f mongo.yml
@@ -98,12 +84,7 @@ jobs:
 
       - name: Set up the Data Base
         run: |
-          GROUP=snap_microk8s # microk8s for non-strict
-          sudo usermod -a -G $GROUP $USER
-          newgrp $GROUP
-          sudo chown -f -R $USER ~/.kube
           echo "Setting Up the Data Base 🍃 🍃 🍃"
-          alias kubectl="microk8s.kubectl"
           microk8s.kubectl exec -it deployment.apps/mongo-deployment -- /bin/bash
           mongosh -u root -p password
           (async function() { await use("ramen-db"); await db.ramen.insertOne({ id: "03934eec-9852-4251-853e-4475406e616f", name: "Kioto", description: "A delicious ramen for those with some experience tasting ramen.", price: 10, spice_level: 2, isDeleted: false}); await db.ramen.insertOne({ id: "4ce1b324-9c6a-4763-9e40-5105167f3acf", name: "Shoyu", description: "A salty ramen with a soy sauce-based broth, thin noodles, and simple toppings.", price: 9, spice_level: 1, isDeleted: false}); await db.ramen.insertOne({ id: "fabdf489-4066-4578-8098-97c5f89fb3f8", name: "Shio", description: "A light ramen with a sea salt-based broth, thin noodles, and fresh toppings.", price: 8, spice_level: 1, isDeleted: false}); await db.ramen.insertOne({ id: "0a2279ef-942d-42a6-9e1b-bced74eed62b", name: "Tonkotsu", description: "A classic ramen with a creamy broth made from pork bones, thick noodles, and meaty toppings.", price: 12, spice_level: 1, isDeleted: false}); await db.ramen.insertOne({ id: "77705fd5-1069-4e15-b78a-79128139ad1c", name: "Miso", description: "A tasty ramen with a miso paste-based broth, medium noodles, and varied toppings.", price: 11, spice_level: 2, isDeleted: false}); await db.ramen.insertOne({ id: "51f4a401-c7c0-4c2d-87ec-270aa59a660c", name: "Tantan", description: "A spicy ramen with a sesame and chili-based broth, thick noodles, and ground meat.", price: 10, spice_level: 3, isDeleted: false}); await db.ramen.insertOne({ id: "3463adc2-33dd-4c83-b5b5-44d6bee8549e", name: "Hiyashi Chuka", description: "A cold ramen with thin noodles, chicken or tofu, vegetables, and a rice vinegar-based sauce.", price: 8, spice_level: 1, isDeleted: false}); await db.ramen.insertOne({ id: "b9f792da-3579-4403-aadf-8b669e40e10c", name: "Tsukemen", description: "A ramen with noodles for dipping in a thick and tasty broth, served with separate toppings.", price: 13, spice_level: 2, isDeleted: false}); await db.ramen.insertOne({ id: "fb542e8e-d980-482d-87de-ae9144df6035", name: "Vegano", description: "A meat-free, dairy-free ramen with a vegetable-based broth, tofu, and vegetable toppings.", price: 9, spice_level: 1, isDeleted: false}); await db.ramen.insertOne({ id: "56a8c07e-f31a-47e4-bfea-827f05e38232", name: "Kimchi", description: "A ramen with kimchi, a spicy fermented cabbage, broth based on meat or vegetables, and Korean toppings.", price: 11, spice_level: 3, isDeleted: false}); })()
@@ -111,12 +92,7 @@ jobs:
       
       - name: Set Up the Backend
         run: |
-          GROUP=snap_microk8s # microk8s for non-strict
-          sudo usermod -a -G $GROUP $USER
-          newgrp $GROUP
-          sudo chown -f -R $USER ~/.kube
           echo "Setting Up the Backend 🦁 🦁 🦁"
-          alias kubectl="microk8s.kubectl"
           cd k8s
           microk8s.kubectl apply -f backend.yml
           sleep 60
@@ -125,12 +101,7 @@ jobs:
 
       - name: Set Up the Frontend
         run: |
-          GROUP=snap_microk8s # microk8s for non-strict
-          sudo usermod -a -G $GROUP $USER
-          newgrp $GROUP
-          sudo chown -f -R $USER ~/.kube
           echo "Setting Up the Frontend 📱 📱 📱"
-          alias kubectl="microk8s.kubectl"
           cd k8s
           microk8s.kubectl apply -f frontend.yml
           sleep 60
