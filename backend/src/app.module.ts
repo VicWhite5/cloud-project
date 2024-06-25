@@ -9,10 +9,6 @@ import { AuditModule } from './audit/audit.module';
 
     ConfigModule.forRoot(),
 
-    // MongooseModule.forRoot(
-    //   `mongodb://${process.env.DB_HOSTS}/${process.env.DB_NAME}?replicaSet=${process.env.REPLICA_SET}`
-    // ),
-
     MongooseModule.forRoot(
       `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOSTS}/${process.env.DB_NAME}?`
     ),
